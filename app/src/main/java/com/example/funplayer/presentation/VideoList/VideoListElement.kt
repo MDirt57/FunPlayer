@@ -1,5 +1,6 @@
 package com.example.funplayer.presentation.VideoList
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.funplayer.R
 import com.example.funplayer.domain.VideoListItem
 
@@ -31,7 +33,7 @@ fun VideoListElement(
 ){
 
     val title = videoListItem.title
-    val duration = videoListItem.duration
+    val preview = videoListItem.preview
 
     Row(
         modifier = Modifier.fillMaxWidth().height(80.dp),
@@ -39,10 +41,9 @@ fun VideoListElement(
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
-        Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
-            contentDescription = "video preview",
-            modifier = Modifier.size(width = 80.dp, height = 48.dp)
+        AsyncImage(
+            model = preview,
+            contentDescription = "preview"
         )
 
         Column(
@@ -53,7 +54,6 @@ fun VideoListElement(
                 fontWeight = FontWeight.Bold,
                 fontSize = 36.sp
             )
-            Text(text = duration)
         }
 
         IconButton(
@@ -74,8 +74,7 @@ fun VideoListElement(
 fun PreviewVideoListElement(){
     VideoListElement(
         VideoListItem(
-            title = "Title",
-            duration = "Duration: 10:00"
+            title = "Title"
         )
     )
 }

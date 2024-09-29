@@ -11,20 +11,14 @@ import com.example.funplayer.domain.VideoListItem
 
 @Composable
 fun VideoList(
+    videoList: List<VideoListItem>,
     modifier: Modifier = Modifier
 ){
-
-    val dummyList = List<VideoListItem>(10) {
-        index -> VideoListItem(
-            title = "Video$index",
-            duration = "Duration: 10:$index"
-        )
-    }
 
     LazyColumn(
         modifier = modifier.fillMaxWidth()
     ) {
-        items(dummyList){
+        items(videoList){
             item -> VideoListElement(item)
         }
     }
@@ -32,9 +26,9 @@ fun VideoList(
 }
 
 
-
-@Preview
-@Composable
-fun PreviewVideoList(){
-    VideoList()
-}
+//
+//@Preview
+//@Composable
+//fun PreviewVideoList(){
+//    VideoList()
+//}

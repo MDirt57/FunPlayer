@@ -25,6 +25,7 @@ fun MainScreen(
 
     viewModel.liveData.observe(LocalLifecycleOwner.current){
         videoList = it
+        Log.d("retrofit", videoList.toString())
     }
 
     Scaffold(
@@ -35,7 +36,7 @@ fun MainScreen(
             modifier = Modifier.padding(contentPadding)
         ) {
             MainScreenCategories()
-            VideoList()
+            VideoList(videoList)
         }
 
     }
