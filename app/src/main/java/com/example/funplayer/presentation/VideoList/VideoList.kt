@@ -12,6 +12,7 @@ import com.example.funplayer.domain.VideoListItem
 @Composable
 fun VideoList(
     videoList: List<VideoListItem>,
+    onClick: (VideoListItem) -> Unit,
     modifier: Modifier = Modifier
 ){
 
@@ -19,7 +20,7 @@ fun VideoList(
         modifier = modifier.fillMaxWidth()
     ) {
         items(videoList){
-            item -> VideoListElement(item)
+            item -> VideoListElement(item, { onClick(item) })
         }
     }
 

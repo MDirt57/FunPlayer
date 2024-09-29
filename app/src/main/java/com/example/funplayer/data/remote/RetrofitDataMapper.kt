@@ -10,7 +10,7 @@ object RetrofitDataMapper {
         return retrofitItemList.map { it ->
             VideoListItem(
                 title = it.title ?: "",
-                source = it.sources[0] ?: "",
+                source = (it.sources[0] ?: "").replace("http", "https"),
                 preview = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/" + it.thumb
             )
         }

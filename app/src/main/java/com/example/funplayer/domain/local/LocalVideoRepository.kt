@@ -7,7 +7,7 @@ interface LocalVideoRepository {
 
     fun getAllItems(): LiveData<List<VideoListItem>>
 
-    suspend fun getItem(id: Int): VideoListItem
+    fun getItem(id: Int): LiveData<VideoListItem>
 
     suspend fun addItems(items: List<VideoListItem>)
 

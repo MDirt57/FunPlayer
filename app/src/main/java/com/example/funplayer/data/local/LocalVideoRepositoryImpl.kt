@@ -19,8 +19,12 @@ class LocalVideoRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getItem(id: Int): VideoListItem {
-        return RoomDataMapper.entityToItem(videoDao.getItem(id))
+    override fun getItem(id: Int): LiveData<VideoListItem> {
+        return MediatorLiveData<VideoListItem>().apply {
+            addSource(videoDao.getItem(id)){
+                value = RoomDataMapper.entityToItem(it)
+            }
+        }
     }
 
     override suspend fun addItems(items: List<VideoListItem>) {

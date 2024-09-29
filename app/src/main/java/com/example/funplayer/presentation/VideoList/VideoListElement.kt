@@ -2,6 +2,7 @@ package com.example.funplayer.presentation.VideoList
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,35 +30,38 @@ import com.example.funplayer.domain.VideoListItem
 
 @Composable
 fun VideoListElement(
-    videoListItem: VideoListItem
+    videoListItem: VideoListItem,
+    onClick: () -> Unit
 ){
 
     val title = videoListItem.title
     val preview = videoListItem.preview
 
+    val textLimit = 27
+
     Row(
-        modifier = Modifier.fillMaxWidth().height(80.dp),
+        modifier = Modifier.fillMaxWidth().height(80.dp).clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
         AsyncImage(
             model = preview,
-            contentDescription = "preview"
+            contentDescription = "preview",
+            modifier = Modifier.size(width = 80.dp, height = 64.dp).weight(0.3f)
         )
 
-        Column(
-            verticalArrangement = Arrangement.SpaceAround
-        ) {
-            Text(
-                text = if (title.length < 10) title else title.slice(0..9)+"...",
-                fontWeight = FontWeight.Bold,
-                fontSize = 36.sp
-            )
-        }
+        Text(
+            text = if (title.length < textLimit+1) title else title.slice(0..textLimit).trim()+"...",
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            maxLines = 2,
+            modifier = Modifier.weight(0.5f)
+        )
 
         IconButton(
-            onClick = {}
+            onClick = {},
+            modifier = Modifier.weight(0.2f)
         ) {
             Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "to favourites")
         }
@@ -69,12 +73,12 @@ fun VideoListElement(
 
 
 
-@Preview
-@Composable
-fun PreviewVideoListElement(){
-    VideoListElement(
-        VideoListItem(
-            title = "Title"
-        )
-    )
-}
+//@Preview
+//@Composable
+//fun PreviewVideoListElement(){
+//    VideoListElement(
+//        VideoListItem(
+//            title = "For Bigger Blazes"
+//        )
+//    )
+//}

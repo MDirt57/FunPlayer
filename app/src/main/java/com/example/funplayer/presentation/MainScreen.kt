@@ -10,36 +10,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.funplayer.domain.VideoListItem
+import com.example.funplayer.navigation.FunPlayerNavActions
+import com.example.funplayer.navigation.addFunPlayerGraph
 import com.example.funplayer.presentation.VideoList.VideoList
+import com.example.funplayer.presentation.VideoPlayer.VideoPlayer
 import com.example.funplayer.presentation.components.MainScreenCategories
 import com.example.funplayer.presentation.components.MainScreenTopBar
 
 
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel = hiltViewModel()
+    navController: NavHostController = rememberNavController(),
+    navActions: FunPlayerNavActions = remember(navController){
+        FunPlayerNavActions(navController)
+    },
+
 ){
 
-    var videoList by remember { mutableStateOf(emptyList<VideoListItem>()) }
-
-    viewModel.liveData.observe(LocalLifecycleOwner.current){
-        videoList = it
-        Log.d("retrofit", videoList.toString())
+    NavHost(
+        navController = navController,
+        startDestination = "main"
+    ){
+        addFunPlayerGraph(navActions = navActions)
     }
-
-    Scaffold(
-        topBar = { MainScreenTopBar() }
-    ) { contentPadding ->
-
-        Column(
-            modifier = Modifier.padding(contentPadding)
-        ) {
-            MainScreenCategories()
-            VideoList(videoList)
-        }
-
-    }
-
 
 }

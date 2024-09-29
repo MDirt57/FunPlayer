@@ -6,6 +6,7 @@ object RoomDataMapper{
 
     fun entityToItem(itemEntity: VideoItemEntity): VideoListItem{
         return VideoListItem(
+            id = itemEntity.id,
             title = itemEntity.title,
             source = itemEntity.source,
             preview = itemEntity.preview,

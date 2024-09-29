@@ -15,7 +15,7 @@ interface VideoDao {
     fun getAllItems(): LiveData<List<VideoItemEntity>>
 
     @Query("SELECT * FROM video_cache WHERE id = :id")
-    suspend fun getItem(id: Int): VideoItemEntity
+    fun getItem(id: Int): LiveData<VideoItemEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItems(items: List<VideoItemEntity>)

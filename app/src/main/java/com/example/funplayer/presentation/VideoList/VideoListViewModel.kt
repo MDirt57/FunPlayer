@@ -1,4 +1,4 @@
-package com.example.funplayer.presentation
+package com.example.funplayer.presentation.VideoList
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class VideoListViewModel @Inject constructor(
     private val remoteRepository: RemoteVideoRepository,
     private val localRepository: LocalVideoRepository,
     private val cacheTimer: CacheTiming
