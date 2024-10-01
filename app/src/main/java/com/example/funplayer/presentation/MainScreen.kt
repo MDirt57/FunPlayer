@@ -32,7 +32,7 @@ fun MainScreen(
     navActions: FunPlayerNavActions = remember(navController){
         FunPlayerNavActions(navController)
     },
-    videoViewModel: VideoListViewModel = hiltViewModel()
+    videoViewModel: ThemeViewModel = hiltViewModel()
 ){
 
     val isDarkTheme by videoViewModel.getTheme().collectAsState(initial = false)

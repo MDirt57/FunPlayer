@@ -16,9 +16,12 @@ import com.example.funplayer.domain.remote.usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 @HiltViewModel
 class VideoListViewModel @Inject constructor(
@@ -47,23 +50,9 @@ class VideoListViewModel @Inject constructor(
                     }
                 }
 
-                cacheData.saveTiming(System.currentTimeMillis() / 60000)
-                Log.d("timing", "VIEW MODEL SCOPE")
+                cacheData.saveTiming(System.currentTimeMillis() / 1000)
             }
         }
-    }
-
-
-    fun getTheme(): Flow<Boolean?>{
-        return cacheData.getTheme
-    }
-
-    fun switchTheme(onDark: Boolean?){
-
-        viewModelScope.launch {
-            cacheData.saveTheme(onDark)
-        }
-
     }
 
 

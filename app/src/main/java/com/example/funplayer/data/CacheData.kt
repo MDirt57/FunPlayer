@@ -11,6 +11,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class CacheData @Inject constructor(@ApplicationContext private val context: Con
         .map { preferences ->
             preferences[LAST_MODIFIED] ?: 0L
         }.filter {
-            System.currentTimeMillis() / 60000 - it > 5L  // if cache older than 5 minutes
+            System.currentTimeMillis() / 1000 - it > 5L  // if cache older than 5 minutes
         }.onEach {
             Log.d("timing", it.toString())
         }

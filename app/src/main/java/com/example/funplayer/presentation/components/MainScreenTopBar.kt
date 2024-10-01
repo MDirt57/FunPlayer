@@ -11,13 +11,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.funplayer.R
+import com.example.funplayer.presentation.ThemeViewModel
 import com.example.funplayer.presentation.VideoList.VideoListViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreenTopBar(
-    viewModel: VideoListViewModel = hiltViewModel()
+    viewModel: ThemeViewModel = hiltViewModel()
 ){
 
     val isDarkTheme by viewModel.getTheme().collectAsState(initial = false)

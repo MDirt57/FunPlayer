@@ -92,7 +92,15 @@ fun floatToTime(value: Float): String{
     val seconds = (value / 1000).toInt()
     val minutes = seconds / 60
     val hours = minutes / 60
-    return "${if (hours != 0) "$hours:" else ""}${minutes % 60}:${seconds % 60}"
+    return "${if (hours != 0) "${decimalFormatter(hours)}:" else ""}${decimalFormatter(minutes % 60)}:${decimalFormatter(seconds % 60)}"
+}
+
+fun decimalFormatter(value: Int): String{
+    return if (value in (0..9)){
+        "0$value"
+    } else {
+        "$value"
+    }
 }
 
 //

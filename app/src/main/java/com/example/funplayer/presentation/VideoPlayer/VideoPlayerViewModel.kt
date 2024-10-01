@@ -32,6 +32,7 @@ class VideoPlayerViewModel @Inject constructor(
         get() = getAllItemsUsecase.getAllItems()
 
     private var currentPosition: Long = 0L
+    private var currentVideo: Int = CurrentVideo.videoOrder
 
     fun initializePlayer(context: Context, videoItems: List<VideoListItem>) {
         if (_playerState.value == null) {
@@ -51,7 +52,7 @@ class VideoPlayerViewModel @Inject constructor(
                     }
 
                     it.setMediaItems(playlist)
-                    it.seekTo(CurrentVideo.videoOrder, currentPosition)
+                    it.seekTo(currentVideo, currentPosition)
 
                     it.prepare()
                     it.playWhenReady = true
@@ -61,17 +62,10 @@ class VideoPlayerViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentVideoTitle(videoItems: List<VideoListItem>): String{
-        var title = ""
-        playerState.value?.let {
-            title = videoItems[it.currentMediaItemIndex].title
-        }
-        return title
-    }
-
     fun savePlayerState() {
         _playerState.value?.let {
             currentPosition = it.currentPosition
+            currentVideo = it.currentMediaItemIndex
         }
     }
 
