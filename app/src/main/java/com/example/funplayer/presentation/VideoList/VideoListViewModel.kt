@@ -43,14 +43,16 @@ class VideoListViewModel @Inject constructor(
 
             cacheData.getTiming.collect{
                 withContext(Dispatchers.IO){
-                    getVideosUseCase.getVideos().collect{ requestList ->
-                        clearAllUsecase.clearAll()
-                        addItemsUsecase.addItems(requestList)
-                        Log.d("timing", "RequestList: $requestList")
-                    }
+                    try {
+                        getVideosUseCase.getVideos().collect{ requestList ->
+                            clearAllUsecase.clearAll()
+                            addItemsUsecase.addItems(requestList)
+                            Log.d("timing", "RequestList: $requestList")
+                        }
+                    } catch (e: Error) { Log.e("timing", "Error is $e")}
                 }
 
-                cacheData.saveTiming(System.currentTimeMillis() / 1000)
+                cacheData.saveTiming(System.currentTimeMillis() / 60000)
             }
         }
     }

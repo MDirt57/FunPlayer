@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.mutableFloatStateOf
@@ -65,7 +66,12 @@ fun BottomNavigation(
         Slider(
             value = sliderPositionCurrent,
             onValueChange = { sliderPositionToChange = it },
-            valueRange = 0f..duration
+            valueRange = 0f..duration,
+            colors = SliderDefaults.colors(
+                thumbColor = Color.White,
+                activeTrackColor = Color.Gray,
+                inactiveTickColor = Color.DarkGray
+            )
         )
 
         Row(

@@ -50,13 +50,6 @@ fun VideoPlayer(
     var isControlVisible by remember { mutableStateOf(false) } //there is error if spamming
     var isControlContacted by remember { mutableStateOf(false) }
 
-    var isCanControl by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        delay(3000)
-        isCanControl = true
-    }
-
     LaunchedEffect(isControlContacted) {
         delay(5000)
         isControlVisible = false
@@ -73,7 +66,7 @@ fun VideoPlayer(
                 PlayerView(context).apply {
                     this.player = player
                     this.useController = false
-                    this.setOnClickListener { if (isCanControl) isControlVisible = !isControlVisible }
+                    this.setOnClickListener { if ((player?.duration ?: 0) > 0) isControlVisible = !isControlVisible }
                 }
             },
             update = { playerView ->

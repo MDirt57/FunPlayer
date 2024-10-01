@@ -30,7 +30,7 @@ fun MainScreenTopBar(
                 onClick = { viewModel.switchTheme(isDarkTheme?.not()) }
             )  {
                 Icon(
-                    painter = painterResource(if (isDarkTheme == true) R.drawable.baseline_light_mode_24 else R.drawable.baseline_mode_night_24),
+                    painter = painterResource(if (isDarkTheme != true) R.drawable.baseline_light_mode_24 else R.drawable.baseline_mode_night_24),
                     contentDescription = "style"
                 )   //change theme
             }
