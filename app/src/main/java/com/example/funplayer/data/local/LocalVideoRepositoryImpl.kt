@@ -37,5 +37,4 @@ class LocalVideoRepositoryImpl @Inject constructor(
         videoDao.clearAll()
     }
 
-
 }

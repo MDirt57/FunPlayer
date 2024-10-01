@@ -11,7 +11,7 @@ import androidx.room.Query
 @Dao
 interface VideoDao {
 
-    @Query("SELECT * FROM video_cache")
+    @Query("SELECT * FROM video_cache ORDER BY title ASC")
     fun getAllItems(): LiveData<List<VideoItemEntity>>
 
     @Query("SELECT * FROM video_cache WHERE id = :id")

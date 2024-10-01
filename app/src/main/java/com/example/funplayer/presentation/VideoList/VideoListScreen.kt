@@ -40,7 +40,7 @@ fun VideoListScreen(
             modifier = Modifier.padding(contentPadding)
         ) {
             MainScreenCategories()
-            VideoList(videoList, {item -> navActions.navigateToPlayer(); CurrentVideo.videoId = item.id})
+            VideoList(videoList, {item ->  navActions.navigateToPlayer(); CurrentVideo.videoOrder = videoList.indexOf(item)})
         }
 
     }
