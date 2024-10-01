@@ -1,23 +1,18 @@
 package com.example.funplayer.presentation.VideoPlayer
 
 import android.content.Context
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.Player
+import androidx.media3.common.MediaMetadata
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.ConcatenatingMediaSource2
 import com.example.funplayer.domain.VideoListItem
 import com.example.funplayer.domain.local.LocalVideoRepository
 import com.example.funplayer.domain.local.usecases.GetAllItemsUsecase
-import com.example.funplayer.domain.local.usecases.GetItemUsecase
 import com.example.funplayer.presentation.CurrentVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -45,7 +40,13 @@ class VideoPlayerViewModel @Inject constructor(
 
                     val playlist = mutableListOf<MediaItem>()
                     for (index in videoItems.indices) {
-                        val mediaItem = MediaItem.Builder().setUri(videoItems[index].source).setMediaId(index.toString()).build()
+
+                        val mediaItem = MediaItem.Builder()
+                            .setUri(videoItems[index].source)
+                            .setMediaId(index.toString())
+                            .setTag(videoItems[index].title)
+                            .build()
+
                         playlist.add(mediaItem)
                     }
 
@@ -60,6 +61,13 @@ class VideoPlayerViewModel @Inject constructor(
         }
     }
 
+    fun getCurrentVideoTitle(videoItems: List<VideoListItem>): String{
+        var title = ""
+        playerState.value?.let {
+            title = videoItems[it.currentMediaItemIndex].title
+        }
+        return title
+    }
 
     fun savePlayerState() {
         _playerState.value?.let {

@@ -19,7 +19,7 @@ object RetrofitModule{
     @Singleton
     fun provideRetrofitClient(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/MDirt57/VideoApi/")
+            .baseUrl("https://raw.githubusercontent.com/MDirt57/FunPlayer/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

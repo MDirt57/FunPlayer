@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -37,10 +38,10 @@ fun VideoListElement(
     val title = videoListItem.title
     val preview = videoListItem.preview
 
-    val textLimit = 27
+    val textLimit = 37
 
     Row(
-        modifier = Modifier.fillMaxWidth().height(80.dp).clickable { onClick() },
+        modifier = Modifier.fillMaxWidth().height(80.dp).padding(start = 8.dp, end = 8.dp).clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
@@ -48,7 +49,7 @@ fun VideoListElement(
         AsyncImage(
             model = preview,
             contentDescription = "preview",
-            modifier = Modifier.size(width = 80.dp, height = 64.dp).weight(0.3f)
+            modifier = Modifier.size(width = 80.dp, height = 64.dp).weight(0.2f)
         )
 
         Text(
@@ -59,12 +60,12 @@ fun VideoListElement(
             modifier = Modifier.weight(0.5f)
         )
 
-        IconButton(
-            onClick = {},
-            modifier = Modifier.weight(0.2f)
-        ) {
-            Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "to favourites")
-        }
+//        IconButton(
+//            onClick = {},
+//            modifier = Modifier.weight(0.2f)
+//        ) {
+//            Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "to favourites")
+//        }
 
     }
 

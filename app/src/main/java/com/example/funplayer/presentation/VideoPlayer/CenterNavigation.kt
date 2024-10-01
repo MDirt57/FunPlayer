@@ -29,14 +29,15 @@ import com.example.funplayer.presentation.VideoPlayer.components.StyledIconButto
 
 @Composable
 fun CenterNavigation(
-    player: ExoPlayer?
+    player: ExoPlayer?,
+    modifier: Modifier = Modifier
 ){
 
     var isPlaying by remember { mutableStateOf(player?.isPlaying == true) }
     val buttonScale = 1.5f
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
@@ -51,7 +52,7 @@ fun CenterNavigation(
             onClick = { if (isPlaying) player?.pause() else player?.play(); isPlaying = !isPlaying },
             scale = buttonScale
         ) {
-            Icon(painter = if (isPlaying) painterResource(R.drawable.baseline_pause_24) else painterResource(R.drawable.baseline_play_arrow_24), contentDescription = "play_pause")
+            Icon(painter = painterResource( if (isPlaying) R.drawable.baseline_pause_24 else R.drawable.baseline_play_arrow_24), contentDescription = "play_pause")
         }
 
         StyledIconButton(

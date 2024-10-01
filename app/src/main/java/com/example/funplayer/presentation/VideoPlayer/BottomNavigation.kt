@@ -33,7 +33,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun BottomNavigation(
     player: ExoPlayer?,
-    contact: () -> Unit
+    contact: () -> Unit,
+    modifier: Modifier = Modifier
 ){
 
     val activity = LocalContext.current as Activity
@@ -59,7 +60,7 @@ fun BottomNavigation(
     }
 
     Column(
-        modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+        modifier = modifier.padding(start = 10.dp, end = 10.dp)
     ) {
         Slider(
             value = sliderPositionCurrent,
@@ -79,7 +80,7 @@ fun BottomNavigation(
             StyledIconButton(
                 onClick = { activity.requestedOrientation =  if (orientation) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED}
             ) {
-                Icon(painter = painterResource(R.drawable.baseline_fullscreen_24), contentDescription = "fullscreen")
+                Icon(painter = painterResource(if (orientation) R.drawable.baseline_fullscreen_24 else R.drawable.baseline_fullscreen_exit_24), contentDescription = "fullscreen")
             }
         }
     }

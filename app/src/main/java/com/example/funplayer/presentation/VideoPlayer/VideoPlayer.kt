@@ -4,37 +4,24 @@ import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.util.Log
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.annotation.OptIn
-import androidx.compose.foundation.AndroidExternalSurface
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 
 
@@ -63,6 +50,13 @@ fun VideoPlayer(
     var isControlVisible by remember { mutableStateOf(false) } //there is error if spamming
     var isControlContacted by remember { mutableStateOf(false) }
 
+    var isCanControl by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(3000)
+        isCanControl = true
+    }
+
     LaunchedEffect(isControlContacted) {
         delay(5000)
         isControlVisible = false
@@ -79,7 +73,7 @@ fun VideoPlayer(
                 PlayerView(context).apply {
                     this.player = player
                     this.useController = false
-                    this.setOnClickListener { isControlVisible = !isControlVisible }
+                    this.setOnClickListener { if (isCanControl) isControlVisible = !isControlVisible }
                 }
             },
             update = { playerView ->

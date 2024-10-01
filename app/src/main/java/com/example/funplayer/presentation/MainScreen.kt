@@ -14,13 +14,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.funplayer.data.CacheData
 import com.example.funplayer.domain.VideoListItem
 import com.example.funplayer.navigation.FunPlayerNavActions
 import com.example.funplayer.navigation.addFunPlayerGraph
 import com.example.funplayer.presentation.VideoList.VideoList
+import com.example.funplayer.presentation.VideoList.VideoListViewModel
 import com.example.funplayer.presentation.VideoPlayer.VideoPlayer
 import com.example.funplayer.presentation.components.MainScreenCategories
 import com.example.funplayer.presentation.components.MainScreenTopBar
+import com.example.funplayer.ui.theme.FunPlayerTheme
 
 
 @Composable
@@ -29,14 +32,18 @@ fun MainScreen(
     navActions: FunPlayerNavActions = remember(navController){
         FunPlayerNavActions(navController)
     },
-
+    videoViewModel: VideoListViewModel = hiltViewModel()
 ){
 
-    NavHost(
-        navController = navController,
-        startDestination = "main"
-    ){
-        addFunPlayerGraph(navActions = navActions)
+    val isDarkTheme by videoViewModel.getTheme().collectAsState(initial = false)
+
+    FunPlayerTheme(darkTheme = isDarkTheme ?: false) {
+        NavHost(
+            navController = navController,
+            startDestination = "main"
+        ){
+            addFunPlayerGraph(navActions = navActions)
+        }
     }
 
 }

@@ -1,10 +1,11 @@
 package com.example.funplayer.presentation.VideoList
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.funplayer.data.CacheTiming
+import com.example.funplayer.data.CacheData
 import com.example.funplayer.domain.VideoListItem
 import com.example.funplayer.domain.local.LocalVideoRepository
 import com.example.funplayer.domain.local.usecases.AddItemsUsecase
@@ -14,6 +15,7 @@ import com.example.funplayer.domain.remote.RemoteVideoRepository
 import com.example.funplayer.domain.remote.usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,7 +24,7 @@ import javax.inject.Inject
 class VideoListViewModel @Inject constructor(
     private val remoteRepository: RemoteVideoRepository,
     private val localRepository: LocalVideoRepository,
-    private val cacheTimer: CacheTiming
+    private val cacheData: CacheData
 ) : ViewModel() {
 
     private val getVideosUseCase: GetVideosUseCase = GetVideosUseCase(remoteRepository)
@@ -36,7 +38,7 @@ class VideoListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
 
-            cacheTimer.getData.collect{
+            cacheData.getTiming.collect{
                 withContext(Dispatchers.IO){
                     getVideosUseCase.getVideos().collect{ requestList ->
                         clearAllUsecase.clearAll()
@@ -45,12 +47,24 @@ class VideoListViewModel @Inject constructor(
                     }
                 }
 
-                cacheTimer.saveData(System.currentTimeMillis() / 60000)
+                cacheData.saveTiming(System.currentTimeMillis() / 60000)
                 Log.d("timing", "VIEW MODEL SCOPE")
             }
         }
     }
 
+
+    fun getTheme(): Flow<Boolean?>{
+        return cacheData.getTheme
+    }
+
+    fun switchTheme(onDark: Boolean?){
+
+        viewModelScope.launch {
+            cacheData.saveTheme(onDark)
+        }
+
+    }
 
 
 }
